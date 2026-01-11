@@ -18,11 +18,14 @@ RUN apt-get update && \
         git \
         build-essential \
         python3-dev \
+        build-essential pkg-config libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev \
         ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip3 install "git+https://github.com/NVIDIA/NeMo.git@main#egg=nemo_toolkit[asr]"
 
 # timeout/retries for large torch wheels
 RUN pip3 install --upgrade pip setuptools wheel && \
